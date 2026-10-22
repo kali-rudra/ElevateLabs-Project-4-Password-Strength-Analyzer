@@ -1,9 +1,9 @@
 # Password Strength Analyzer with Custom Wordlist Generator
 ## Test Plan
 
-**Document status:** Approved baseline — tests not yet executed  
-**Project:** ElevateLabs Project 4  
-**Version:** 1.0
+**Document status:** Approved baseline — partial test execution recorded; remaining tests pending
+**Project:** ElevateLabs Project 4
+**Version:** 1.1
 
 ## 1. Purpose
 
@@ -40,16 +40,17 @@ The initial classification policy is:
 1. An exact match in the configured local common-password list is **Weak**, regardless of letter case.
 2. Passwords shorter than 8 characters are **Weak**.
 3. Clearly severe repetition or predictable sequences may result in **Weak**, according to defined and tested rules.
-4. A meaningful match with the supplied username prevents a **Strong** classification but does not automatically make the password Weak.
-5. **Strong** requires at least 14 characters as a project baseline and an appropriate assessment by zxcvbn, supplemented by the application's rules.
-6. The initial zxcvbn score mapping is:
+4. Username input is mandatory. The analyzer must not begin password assessment until a username containing at least one non-whitespace character has been supplied.
+5. A meaningful match with the supplied username prevents a **Strong** classification but does not automatically make the password Weak.
+6. **Strong** requires at least 14 characters as a project baseline and an appropriate assessment by zxcvbn, supplemented by the application's rules.
+7. The initial zxcvbn score mapping is:
    - Scores 0–1: Weak.
    - Score 2: Moderate.
    - Scores 3–4: Strong candidate before project-specific overrides.
-7. Any mandatory project rule that makes a password Weak takes precedence over a more favourable estimator score.
-8. A password that is not Weak and does not qualify as Strong is classified as Moderate.
-9. Character variety alone must never be treated as proof of security.
-10. The result must explain detected weaknesses and offer useful improvement suggestions.
+8. Any mandatory project rule that makes a password Weak takes precedence over a more favourable estimator score.
+9. A password that is not Weak and does not qualify as Strong is classified as Moderate.
+10. Character variety alone must never be treated as proof of security.
+11. The result must explain detected weaknesses and offer useful improvement suggestions.
 
 The implementation must apply these rules consistently. The 14-character baseline is a project policy, not a universal security guarantee.
 
@@ -76,6 +77,10 @@ All cases below are planned tests. Expected outcomes are not observed results.
 | PA-15 | Score mapping | Controlled tests producing zxcvbn scores 0, 1, 2, 3 and 4 | Each score maps to the documented initial category before overrides. |
 | PA-16 | Privacy during analysis | Analyze a test password and inspect application behaviour | Password and username are not written to logs, files or network destinations. |
 | PA-17 | Invalid output path | Supply an invalid or unusable wordlist output path | Clear error; no silent fallback to a different path. |
+| PA-18 | Blank username | Submit an empty username | Reject it; do not begin password assessment; prompt again. |
+| PA-19 | Whitespace-only username | Enter spaces or tabs as the username | Reject it; do not begin password assessment; prompt again. |
+| PA-20 | Valid username after invalid input | Enter a blank or whitespace-only username, then a valid username | Continue only after valid username input; perform the username check. |
+| PA-21 | Username check cannot be skipped | Follow the interactive prompts and attempt to bypass the username field | No bypass or partial-assessment route; password assessment requires a valid username. |
 
 ## 5. Custom Wordlist Generator Test Cases
 
@@ -139,7 +144,19 @@ For each executed test, record:
 
 Do not record real passwords or usernames in the test report or engineering log.
 
-**Initial status:** All tests are planned and not yet executed.
+**Current status:** Partial execution recorded. Only the results listed below have been observed; all other tests remain pending until executed.
+
+### Executed Test Results
+
+| Test ID | Observed condition | Actual observed result | Status |
+|---|---|---|---|
+| PA-18 | Empty username submitted | Rejected; program prompted for a username again. | Pass |
+| PA-19 | Whitespace-only username submitted | Rejected; program prompted for a username again. | Pass |
+| PA-20 | Invalid username input followed by a valid username | Program accepted the valid username and continued to password assessment. | Pass |
+| PA-21 | Attempt to bypass the mandatory username check | No dedicated bypass attempt has been performed. | Pending |
+| Username-match warning | A test run produced a meaningful-username-match warning. | Warning observed; the test did not establish that a password otherwise qualifying as Strong is downgraded to Moderate. | Partial |
+
+**Verification note:** `python -m py_compile main.py` completed without a syntax error after the obsolete partial-assessment route was removed. A search confirmed that the old skip/partial-assessment wording was absent. These checks do not establish that every application requirement has passed.
 
 ## 9. Known Limitations
 

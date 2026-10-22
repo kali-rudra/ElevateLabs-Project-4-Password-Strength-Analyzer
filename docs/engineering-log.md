@@ -1,5 +1,4 @@
 # Engineering and Learning Log
-
 ## Project
 
 **Password Strength Analyzer + Controlled Wordlist Generator**
@@ -45,14 +44,14 @@ These commit identifiers were observed in terminal output.
 * Refuse to overwrite an existing output file by default.
 * Prefer the Python standard library unless an additional dependency is justified.
 
-## 5. Planned Work — Not Yet Implemented
+## 5. Remaining Work — Not Yet Completed
 
-* Implement password analysis and strength classification.
-* Implement username-similarity checks.
+* Complete and verify password analysis and strength classification.
+* Verify username-similarity checks, including the Moderate override.
 * Implement controlled wordlist and random test-string generation.
-* Implement safe text-file export.
+* Implement safe text-file export, output-path confirmation, and file-safety checks.
 * Add automated tests for normal cases, edge cases, privacy, limits, and file safety.
-* Review the design and document actual test results.
+* Review the design and record actual test results.
 * Consider a graphical interface only after the CLI is stable.
 
 ## 6. Learning Notes
@@ -65,12 +64,48 @@ These commit identifiers were observed in terminal output.
 
 ## 7. Current Checkpoint
 
-Environment setup, Git initialization, the README commit, and creation of the project directories have been verified.
+Environment setup, Git initialization, the README, project directories, and the initial application files have been created.
 
-Application code has not yet been written.
+The command-line application now contains password-analysis logic, common-password checking, username matching, and strength classification. The custom wordlist generator remains to be implemented.
 
-No application tests have been run.
+Manual testing has begun for mandatory username validation. Empty and whitespace-only usernames were rejected, valid usernames were accepted, and a username-match warning was observed in one run. These results are recorded in the test plan.
+
+The syntax check completed successfully after removal of the obsolete partial-assessment route. Full application verification remains incomplete.
 
 ## 8. Log Maintenance Rule
 
 Update this log as work progresses. Record actual commands, observed results, decisions, test outcomes, and unresolved issues accurately. Never report planned work as completed or unverified results as successful.
+
+## 9. Work Log — 2026-10-22
+
+### Mandatory Username Validation
+
+**Objective:** Make username input mandatory before password assessment and remove the obsolete route that allowed assessment to continue without username matching.
+
+**Changes made:**
+* Removed the option to continue without a username.
+* Added validation that rejects empty and whitespace-only usernames and prompts again.
+* Removed the obsolete partial-assessment message and its now-unnecessary conditional.
+* Simplified username matching because a valid username is now required.
+
+**Commands executed:**
+
+* `python -m py_compile main.py` — initially exposed an indentation error after the obsolete print statement was removed; passed after the associated empty conditional was also removed.
+* `grep -n -E "leave blank|Continue without|Assessment status: Partial|username_match" main.py` — confirmed that the old skip/partial-assessment wording was absent and username-matching logic remained.
+
+**Manual observations:**
+* An empty username was rejected and the program prompted again.
+* A whitespace-only username was rejected and the program prompted again.
+* Valid synthetic usernames were accepted, and the program proceeded to password assessment.
+* A username-match warning appeared in one run.
+* The observed assessment runs returned a score of 1 out of 4 and a Weak classification. Because the password inputs were hidden and the runs did not establish an otherwise-Strong result, the Moderate-override test remains pending.
+
+**Test documentation:** Updated `docs/test-plan.md` to version 1.1, recording partial execution and distinguishing observed results from pending tests.
+
+**Outstanding verification:**
+* Test the username-match Moderate override with a synthetic test case that otherwise qualifies as Strong.
+* Perform a dedicated attempt to bypass username input.
+* Continue testing the remaining password-analysis requirements.
+* Implement and test the custom wordlist generator.
+
+No password values were recorded in this log.
