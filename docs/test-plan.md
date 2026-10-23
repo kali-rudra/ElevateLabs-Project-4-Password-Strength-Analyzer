@@ -81,6 +81,7 @@ All cases below are planned tests. Expected outcomes are not observed results.
 | PA-19 | Whitespace-only username | Enter spaces or tabs as the username | Reject it; do not begin password assessment; prompt again. |
 | PA-20 | Valid username after invalid input | Enter a blank or whitespace-only username, then a valid username | Continue only after valid username input; perform the username check. |
 | PA-21 | Username check cannot be skipped | Follow the interactive prompts and attempt to bypass the username field | No bypass or partial-assessment route; password assessment requires a valid username. |
+| PA-22 | Username-match Moderate override | Use a synthetic password that scores 4/4 and contains a meaningful part of the supplied username | Display the username-match warning and classify as Moderate, not Strong. |
 
 ## 5. Custom Wordlist Generator Test Cases
 
@@ -154,7 +155,8 @@ Do not record real passwords or usernames in the test report or engineering log.
 | PA-19 | Whitespace-only username submitted | Rejected; program prompted for a username again. | Pass |
 | PA-20 | Invalid username input followed by a valid username | Program accepted the valid username and continued to password assessment. | Pass |
 | PA-21 | Attempt to bypass the mandatory username check | No dedicated bypass attempt has been performed. | Pending |
-| Username-match warning | A test run produced a meaningful-username-match warning. | Warning observed; the test did not establish that a password otherwise qualifying as Strong is downgraded to Moderate. | Partial |
+| PA-22 | Synthetic username-matching test; zxcvbn score 4/4 | Warning displayed; preliminary classification was Moderate. | Pass |
+| Username-match warning | A test run produced a meaningful-username-match warning. | Warning observed in an earlier run; the dedicated Moderate-override behaviour was subsequently verified by PA-22. | Pass for warning observation; see PA-22 for override |
 
 **Verification note:** `python -m py_compile main.py` completed without a syntax error after the obsolete partial-assessment route was removed. A search confirmed that the old skip/partial-assessment wording was absent. These checks do not establish that every application requirement has passed.
 

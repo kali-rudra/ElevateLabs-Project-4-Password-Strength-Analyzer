@@ -109,3 +109,33 @@ Update this log as work progresses. Record actual commands, observed results, de
 * Implement and test the custom wordlist generator.
 
 No password values were recorded in this log.
+
+## 10. Work Log — 2026-10-23
+
+### Username-Match Moderate Override Verification
+
+**Objective:** Verify that a meaningful username match prevents a password
+otherwise eligible for Strong from receiving a Strong classification.
+
+**Test method:** Ran the interactive application with synthetic test data.
+The password was entered through the hidden password prompt; its value is
+intentionally omitted from this log.
+
+**Observed results:**
+* zxcvbn returned a raw strength score of 4 out of 4.
+* The application displayed the meaningful-username-match warning.
+* The application displayed `Moderate` as the preliminary classification.
+
+**Outcome:** PA-22 — Pass for this test case. The observed result confirms
+that the username-match rule overrides an otherwise high-scoring result
+to Moderate in this scenario.
+
+**Evidence:** `EL-P04-EV-001_2026-10-23_Username-Match-Moderate-Override.png`
+is listed in `docs/evidence-register.md`.
+
+**Outstanding verification:**
+* PA-21 — Perform a dedicated attempt to bypass username input.
+* Continue testing the remaining password-analysis requirements.
+* Implement and test the custom wordlist generator.
+
+No password values were recorded in this log.
