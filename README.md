@@ -2,51 +2,91 @@
 
 ## Project Overview
 
-This project is an educational Python command-line application designed to:
+An educational Python command-line application that assesses password strength and generates controlled wordlists from synthetic inputs.
 
-1. Analyze password strength using multiple indicators.
-2. Explain weaknesses and suggest improvements.
-3. Check for meaningful similarities between a password and a username.
-4. Generate controlled wordlists from synthetic test words.
-5. Generate random test strings using selected lengths and character sets.
-6. Remove duplicate candidates and enforce generation limits.
-7. Export generated wordlists to text files safely.
+## Features
 
-## Project Objectives
-
-- Practise Python programming and problem-solving.
-- Understand password-strength assessment concepts.
-- Learn safe file handling and input validation.
-- Apply modular design and automated testing.
-- Maintain a clear engineering and learning record.
+- Password-strength assessment using zxcvbn and additional validation rules.
+- Mandatory username input and similarity checks.
+- Weakness identification and improvement suggestions.
+- Custom wordlist generation using contextual words, case variations, limited leetspeak and selected suffixes.
+- Duplicate removal and a maximum generation limit of 10,000 candidates.
+- Text-file export with output-path validation and overwrite protection.
+- Separate analysis and wordlist-generation functions.
 
 ## Technology
 
 - **Language:** Python 3
 - **Platform:** Kali Linux
 - **Interface:** Command-line interface (CLI)
+- **Dependency:** zxcvbn
 - **Version control:** Git
-- **Database:** Not required
+
+## Setup
+
+Clone the repository and enter the project directory:
+
+```bash
+git clone https://github.com/kali-rudra/ElevateLabs-Project-4-Password-Strength-Analyzer.git
+cd ElevateLabs-Project-4-Password-Strength-Analyzer
+```
+
+Create and activate a virtual environment:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+Install the dependency:
+
+```bash
+python -m pip install zxcvbn
+```
+
+## Usage
+
+Analyze a password:
+
+```bash
+python main.py analyze
+```
+
+Generate a custom wordlist:
+
+```bash
+python main.py generate
+```
+
+View available commands:
+
+```bash
+python main.py --help
+```
+
+Use synthetic test data for wordlist generation. Only use generated wordlists in authorized educational environments.
 
 ## Security and Privacy
 
-- Password analysis will be performed locally.
-- Actual passwords must not be written to logs or output files.
+- Password analysis is performed locally.
+- Password and username inputs are not intentionally saved or logged.
+- Password input uses hidden terminal entry.
 - No password transmission is intended.
-- Wordlist generation is intended for synthetic test data and authorized educational labs.
-- Generated wordlists will have a configurable, enforced maximum size.
-- Existing output files must not be overwritten without explicit confirmation.
+- Generated wordlists contain user-provided contextual candidates, not analysed passwords.
+- Existing output files require confirmation before overwrite.
 
-## Project Status
+## Testing and Project Status
 
-Initial environment setup and Git repository initialization are complete.
+Core password-analysis and wordlist-generation functionality has been implemented and tested.
 
-Application implementation and testing are pending.
+Testing includes input validation, username checks, candidate deduplication, generation limits, text export, overwrite protection and output-path error handling.
+
+Privacy handling has also undergone source-code review.
 
 ## Disclaimer
 
-Password-strength results are educational estimates, not guarantees of security. This tool does not replace the use of unique passwords, password managers, or multi-factor authentication.
+Password-strength results are educational estimates, not guarantees of security. This tool does not replace unique passwords, password managers or multi-factor authentication.
 
 ## License
 
-To be decided.
+No open-source licence has been assigned.

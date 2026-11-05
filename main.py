@@ -3,6 +3,7 @@
 import argparse
 import getpass
 from zxcvbn import zxcvbn
+from wordlist_generator import generate_wordlist
 
 def load_common_passwords():
     with open("data/common_passwords.txt", "r") as file:
@@ -91,8 +92,7 @@ def main():
             print("Entries do not match. Please try again.")
 
     elif args.command == "generate":
-        print("Generate selected. Feature not implemented yet.")
-
+        generate_wordlist()
 
 if __name__ == "__main__":
     main()

@@ -133,9 +133,9 @@ to Moderate in this scenario.
 **Evidence:** `EL-P04-EV-001_2026-10-23_Username-Match-Moderate-Override.png`
 is listed in `docs/evidence-register.md`.
 
-**Outstanding verification:**
-* PA-21 — Perform a dedicated attempt to bypass username input.
-* Continue testing the remaining password-analysis requirements.
-* Implement and test the custom wordlist generator.
+**Verification status:**
+* PA-21 — Completed; two blank username submissions were rejected before assessment. See `docs/test-plan.md` and EV-006.
+* Continue testing any remaining password-analysis requirements as applicable.
+* Custom wordlist generator implemented and tested; see WG-07 through WG-12 in `docs/test-plan.md` and EV-002 through EV-007.
 
 No password values were recorded in this log.

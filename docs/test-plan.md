@@ -154,7 +154,7 @@ Do not record real passwords or usernames in the test report or engineering log.
 | PA-18 | Empty username submitted | Rejected; program prompted for a username again. | Pass |
 | PA-19 | Whitespace-only username submitted | Rejected; program prompted for a username again. | Pass |
 | PA-20 | Invalid username input followed by a valid username | Program accepted the valid username and continued to password assessment. | Pass |
-| PA-21 | Attempt to bypass the mandatory username check | No dedicated bypass attempt has been performed. | Pending |
+| PA-21 | Attempt to bypass the mandatory username check | Two blank username submissions were rejected; assessment proceeded only after `testuser` was entered. | Pass |
 | PA-22 | Synthetic username-matching test; zxcvbn score 4/4 | Warning displayed; preliminary classification was Moderate. | Pass |
 | Username-match warning | A test run produced a meaningful-username-match warning. | Warning observed in an earlier run; the dedicated Moderate-override behaviour was subsequently verified by PA-22. | Pass for warning observation; see PA-22 for override |
 
@@ -170,3 +170,14 @@ Do not record real passwords or usernames in the test report or engineering log.
 - Test outcomes may depend on the installed dependency version and configured dictionaries.
 
 These limitations must be considered when interpreting test results.
+
+### Generator Test Execution Results - 2026-11-05
+
+| Test ID | Observed result | Status |
+|---|---|---|
+| WG-07 | Duplicate input `river` produced six unique candidates; no duplicate entries were returned. | Pass |
+| WG-08 | Invalid suffix `#` was rejected during the earlier validation test; valid selections were accepted. | Pass |
+| WG-09 | Earlier successful generator runs exported candidate lists and their contents were inspected. The later custom-path rerun encountered an existing file and was cancelled at the overwrite prompt. | Pass - earlier export evidence; custom-path rerun not reconfirmed |
+| WG-10 | Existing file was preserved after overwrite confirmation was declined. | Pass |
+| WG-11 | Custom output directory and filename were accepted. Invalid absolute path produced a handled `OSError` message without crashing. | Pass |
+| WG-12 | Source review found no password or username persistence, logging, database writes or credential export. Password input uses `getpass`; generated wordlist export is separate. | Pass - source-code review |
